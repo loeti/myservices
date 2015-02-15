@@ -1,0 +1,83 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Inventage Demonstration Services",
+        "description": "This services demonstrate the power of well documented, standardized REST API used for arbitrary services.",
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/holiday": {
+            "get": {
+                "summary": "Public holidays for the city of Zurich",
+                "description": "The holiday endpoint returns information about the public holiday for the city of\nZurich including the public holidays of the Canton of Zurich and the public \nholidays of Switzerland. The response includes the dates for the specified year and\nthe display names in German in ascending order of the dates.\n",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "The year.",
+                        "required": true,
+                        "type": "number",
+                        "format": "int"
+                    }
+                ],
+                "tags": [
+                    "Public Holidays"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of holidays.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Holiday"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Holiday": {
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date of the public holiday."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Description of product."
+                }
+            }
+        },
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
